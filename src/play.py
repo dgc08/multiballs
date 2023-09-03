@@ -34,9 +34,11 @@ class Player:
         )
         self.dataprovider.start()
 
-        data = next(self.dataprovider.data)
-        while data and self.is_playing:
-            self.stream.write(data)
+        try:
             data = next(self.dataprovider.data)
-        self.is_playing = False
-        self.stop()
+            while data and self.is_playing:
+                self.stream.write(data)
+                data = next(self.dataprovider.data)
+        except StopIteration:
+            self.is_playing = False
+            self.stop()
