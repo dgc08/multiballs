@@ -1,8 +1,11 @@
+import time
+
 import pyaudio
 import subprocess
 
 # Define the FFmpeg command to receive and decode the UDP stream
 from src.SoundProviders.FFmpegStream import FFmpegStream
+from src.play import Player
 
 ffmpeg_command = [
     'ffmpeg',
@@ -11,43 +14,10 @@ ffmpeg_command = [
     '-'
 ]
 
-# Initialize PyAudio
-p = pyaudio.PyAudio()
-p2 = pyaudio.PyAudio()
-
 device=8
-# Set the index of the desired output device (replace with the correct index)
 
-# Open a stream for playback with the specified output device
-
-stream2 = p2.open(format=pyaudio.paInt16,  # Adjust format as needed
-                channels=2,  # Adjust channels as needed
-                rate=44100,  # Adjust sample rate as needed
-                output=True,
-                output_device_index=8)  # Set the output device index
-
-
-# Start FFmpeg subprocess
 datastream = FFmpegStream(ffmpeg_command)
+player = Player(8, datastream)
 
-# Read data from FFmpeg and play it
-datastream.start()
+player.play()
 
-#data = datastream.data()
-data = next(datastream.data)
-while data:
-    stream.write(data)
-    stream2.write(data)
-    #data = datastream.ffmpeg_process.stdout.read(1024)
-    #data = datastream.data()
-    data = next(datastream.data)
-
-# Cleanup
-datastream.cleanup()
-stream.stop_stream()
-stream.close()
-stream2.stop_stream()
-stream2.close()
-p.terminate()
-p2.terminate()
-print("end")

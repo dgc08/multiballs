@@ -6,10 +6,11 @@ class FFmpegStream:
 
     def __init__(self, params):
         self.params = params
+        self.data = self.__data_provider()
     def start(self):
         self.ffmpeg_process = subprocess.Popen(self.params, stdout=subprocess.PIPE, stderr=subprocess.DEVNULL,
                                               bufsize=1024)
-        self.data = self.__data_provider()
+
 
 
     def __data_provider(self):
