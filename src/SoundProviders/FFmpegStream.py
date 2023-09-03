@@ -1,16 +1,12 @@
 import subprocess
-
+from src.utils import get_project_root
 
 class FFmpegStream:
     stream_not_started = True
 
-    def __init__(self, params):
-        self.params = params
+    def __init__(self, arg, *ffmpeg_args):
+        self.params = [get_project_root() + 'bin/ffmpeg.exe','-i',arg, '-f', 'wav', "-ar", "48000", *ffmpeg_args, '-']
         self.data = self.__data_provider()
-
-    @staticmethod
-    def get_by_argument(arg):
-        return FFmpegStream(['ffmpeg','-i',arg, '-f', 'wav', '-'])
 
     def start(self):
         self.ffmpeg_process = subprocess.Popen(self.params, stdout=subprocess.PIPE, stderr=subprocess.DEVNULL,
