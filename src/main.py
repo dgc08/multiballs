@@ -9,7 +9,7 @@ import pyaudio
 from src.Player import Player
 from src.const import available_backends
 from src.server import Server
-from src.utils import get_device_name_by_number, get_project_root
+from src.utils import get_device_name_by_number, get_project_root, Singleton
 
 """
 device=8
@@ -54,6 +54,9 @@ def main():
                          stderr=subprocess.PIPE, shell=True)
         print("Done.")
         return
+
+    singleton = Singleton()
+    singleton.set_value(args.verbose, "verbose")
 
     # Device Handling
     devices = args.devices.split(",")

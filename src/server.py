@@ -8,7 +8,8 @@ from PIL import Image
 
 from src.Player import Player
 from src.const import available_backends
-from src.utils import get_project_root
+from src.utils import get_project_root, Singleton
+
 
 class Server:
     def __init__(self):
@@ -16,6 +17,8 @@ class Server:
         self.players = []
 
     def run_server(self):
+        s = Singleton.get_instance()
+        s.set_value("verbose", True)
         self.server_running = True
 
         image = Image.open(get_project_root() + 'assets/icon.png')  # Replace 'icon.png' with your icon image
@@ -97,6 +100,8 @@ class Server:
             self.players.append(Player(available_backends[data["backend"]](*data["params"]), *(data["devices"])))
             self.players[-1].enable_self_deletion(self.players)
             self.players[-1].play()
+        elif data["command"] == "stop-all":
+            self.stop_all()
 
     def stop_all(self,icon=None, item=None):
         for i in self.players:

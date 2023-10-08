@@ -23,3 +23,23 @@ def get_project_root():
     project_root = os.path.dirname(current_path)  # Get the directory containing the script
 
     return os.path.dirname(project_root).replace("\\", "/") + "/"  # Get the directory above the script's directory (the project root)
+
+
+class Singleton:
+    _instance = None
+
+    def __new__(cls):
+        if cls._instance is None:
+            cls._instance = super(Singleton, cls).__new__(cls)
+            cls._instance.value = {} # Initialize the shared variable
+        return cls._instance
+
+    def get_value(self, key=None):
+        return self.value.get(key, None)
+
+    def set_value(self, new_value, key=None):
+        self.value[key] = new_value
+
+    @classmethod
+    def get_instance(cls):
+        return cls.__new__(cls)
