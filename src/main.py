@@ -13,8 +13,8 @@ from src.utils import get_device_name_by_number, get_project_root, Singleton
 
 """
 device=8
-#datastream = Youtube("https://www.youtube.com/watch?v=9HuSvo6qQ-E")
-datastream = FFmpegStream("C:\Library\cache\change\SymphonicSuite [AoT] Part2-2nd：ShingekiNoKyojin [YAiSUQGXcew].webm")
+#datastream = Youtube("no i did not use amabatakaam for testing no dont look in older commits")
+datastream = FFmpegStream("no i did not use attack on titan music for testing no dont look in older commits")
 
 
 player = Player(device, datastream)
